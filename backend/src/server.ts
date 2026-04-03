@@ -1,15 +1,19 @@
+import "dotenv/config";
 import express from "express";
 import type { Request, Response } from "express";
+import leadRoutes from "./routes/lead.routes";
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("Server is running");
+    res.status(200).json({ message: "API is running" });
 });
 
-app.listen(port, () => {
-    console.log(`App listening on port ${port}`);
+app.use("/leads", leadRoutes);
+
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
