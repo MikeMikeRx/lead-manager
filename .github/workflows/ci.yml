@@ -10,6 +10,8 @@ jobs:
   backend:
     name: Backend
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://user:password@localhost:5432/test
     defaults:
       run:
         working-directory: backend
@@ -34,6 +36,8 @@ jobs:
   frontend:
     name: Frontend
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_API_URL: http://localhost:4000
     defaults:
       run:
         working-directory: frontend
