@@ -46,7 +46,7 @@ export const createLead = async (req: Request, res: Response) => {
     });
 
     return res.status(201).json(lead);
-  } catch (error) {
+  } catch (error: unknown) {
     if (
       error instanceof Prisma.PrismaClientKnownRequestError &&
       error.code === "P2002"
