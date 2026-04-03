@@ -1,19 +1,11 @@
-type Lead = {
-  id: string;
-  name: string;
-  email: string;
-  status: string;
-  createdAt: string;
-};
+import { getLeads, type Lead } from "@/lib/api";
 
 const Home = async () => {
   let leads: Lead[] = [];
   let error: string | null = null;
 
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/leads`, { cache: "no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    leads = await res.json();
+    leads = await getLeads();
   } catch (e) {
     error = e instanceof Error ? e.message : "Failed to fetch leads";
   }
