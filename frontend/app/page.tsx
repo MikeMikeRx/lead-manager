@@ -1,4 +1,5 @@
 import { getLeads, type Lead } from "@/lib/api";
+import LeadForm from "../components/LeadForm";
 
 const Home = async () => {
   let leads: Lead[] = [];
@@ -38,6 +39,8 @@ const Home = async () => {
           </tbody>
         </table>
       )}
+      <hr style={{ marginTop: "2rem", borderColor: "#ccc" }} />
+      <LeadForm />
     </main>
   );
 };
