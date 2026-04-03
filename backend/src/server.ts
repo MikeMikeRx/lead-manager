@@ -1,10 +1,17 @@
 import "dotenv/config";
 import express from "express";
 import type { Request, Response } from "express";
+import cors from "cors";
 import leadRoutes from "./routes/lead.routes";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+app.use(
+    cors({
+        origin: "http://localhost:3000",
+    })
+);
 
 app.use(express.json());
 
