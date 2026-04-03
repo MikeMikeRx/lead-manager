@@ -1,7 +1,53 @@
-const Home = () => {
+type Lead = {
+  id: string;
+  name: string;
+  email: string;
+  status: string;
+  createdAt: string;
+};
+
+const Home = async () => {
+  let leads: Lead[] = [];
+  let error: string | null = null;
+
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/leads`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    leads = await res.json();
+  } catch (e) {
+    error = e instanceof Error ? e.message : "Failed to fetch leads";
+  }
+
   return (
-    <div>Frontend</div>
+    <main style={{ padding: "2rem", fontFamily: "monospace" }}>
+      <h1>Leads</h1>
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+      {!error && leads.length === 0 && <p>No leads found.</p>}
+      {leads.length > 0 && (
+        <table style={{ borderCollapse: "collapse", width: "100%" }}>
+          <thead>
+            <tr>
+              {["Name", "Email", "Status", "Created"].map((h) => (
+                <th key={h} style={{ textAlign: "left", padding: "8px 12px", borderBottom: "1px solid #ccc" }}>
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {leads.map((lead) => (
+              <tr key={lead.id}>
+                <td style={{ padding: "8px 12px" }}>{lead.name}</td>
+                <td style={{ padding: "8px 12px" }}>{lead.email}</td>
+                <td style={{ padding: "8px 12px" }}>{lead.status}</td>
+                <td style={{ padding: "8px 12px" }}>{new Date(lead.createdAt).toLocaleDateString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </main>
   );
-}
+};
 
 export default Home;
